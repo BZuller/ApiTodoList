@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import express, {  Request, Response } from 'express';
+import express, {  NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import AppError from '@shared/errors/AppError';
 import '@shared/typeorm/';
@@ -16,7 +16,7 @@ app.use(routes);
 
 app.use(errors());
 
-app.use((error: Error, request: Request, response: Response) => {
+app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
   if( error instanceof AppError){
     return response.status(error.statusCode).json({
       status: 'error',
